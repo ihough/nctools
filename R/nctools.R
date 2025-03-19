@@ -350,25 +350,27 @@ nc_crs <- function(
 #' values; the packed values will be written to the file as type `pack_type`. The resulting list
 #' will have `type` set to `pack_type` to indicate that the data will be written as `pack_type`. See
 #' [NC_TYPES] for a list of valid types.
+#' @param pack_type,add_offset,scale_factor If defined, values will be packed to save space by first
+#' subtracting `add_offset` then dividing by `scale_factor` and writing as type `pack_type`.
 #' @param long_name Optional descriptive name of the variable.
 #' @param standard_name Optional standard name of the variable.
 #' @param units Optional units of the variable.
 #' @param grid_mapping Optional name of a grid_mapping created with [nc_crs()]. For details, see
+#' @param fill_value Optional value to use for missing data. If data are packed, `fill_value` must
+#' be within range of For details, see
 #' @param atts Optional list of attributes created with [nc_att()].
 #' @param chunking Set to `NA` to allow the netCDF library to choose a storage layout, `FALSE` for
 #' contiguous storage, or a vector named with the dimensions indicating the number of elements along
 #' each dimension. Any `NA` elements in the vector will be replaced by the dimension's size.
 #' @param deflate Compression level from 1 (min) to 9 (max) or `NA` (no compression).
 #' @param shuffle Whether to enable byte shuffling, which may improve compression with `deflate`.
-#' [CF conventions section 5.6](https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#grid-mappings-and-projections).
-#' @param pack_type,add_offset,scale_factor If defined, values will be packed to save space by first
-#' subtracting `add_offset` then dividing by `scale_factor` and writing as type `pack_type`.
-#' @param fill_value Optional value to use for missing data. If data are packed, `fill_value` must
-#' be within range of For details, see
-#' [CF conventions section 2.5.1](https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#missing-data).
 #'
 #' @returns A list of the passed arguments.
 #' @export
+#'
+#' @seealso See https://cfconventions.org/ for details on packing, grid mappings, and recommended
+#' names and units. See https://docs.unidata.ucar.edu/nug/current/netcdf_perf_chunking.html for
+#' details on chunking.
 #'
 #' @examples
 #' ## Generate some data
@@ -383,9 +385,9 @@ nc_crs <- function(
 #' ## Pack to reduce file size: divide by 0.1 and write as 16-bit integers rather than 32-bit floats
 #' nc_var("elev", data = data, dims = c("y", "x"), pack_type = "NC_SHORT", scale_factor = 0.1)
 nc_var <- function(
-    name, data, dims, type = NULL, long_name = NULL, standard_name = NULL, units = NULL,
-    grid_mapping = NULL, chunking = NA, deflate = NA, shuffle = FALSE, pack_type = NULL,
-    add_offset = NULL, scale_factor = NULL, fill_value = NULL, atts = NULL) {
+    name, data, dims, type = NULL, pack_type = NULL, add_offset = NULL, scale_factor = NULL,
+    long_name = NULL, standard_name = NULL, units = NULL, grid_mapping = NULL, fill_value = NULL,
+    atts = NULL, chunking = NA, deflate = NA, shuffle = FALSE) {
   stopifnot(is.character(name))
   stopifnot(is.character(dims))
 

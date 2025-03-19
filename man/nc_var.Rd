@@ -9,18 +9,18 @@ nc_var(
   data,
   dims,
   type = NULL,
+  pack_type = NULL,
+  add_offset = NULL,
+  scale_factor = NULL,
   long_name = NULL,
   standard_name = NULL,
   units = NULL,
   grid_mapping = NULL,
+  fill_value = NULL,
+  atts = NULL,
   chunking = NA,
   deflate = NA,
-  shuffle = FALSE,
-  pack_type = NULL,
-  add_offset = NULL,
-  scale_factor = NULL,
-  fill_value = NULL,
-  atts = NULL
+  shuffle = FALSE
 )
 }
 \arguments{
@@ -37,6 +37,9 @@ values; the packed values will be written to the file as type \code{pack_type}. 
 will have \code{type} set to \code{pack_type} to indicate that the data will be written as \code{pack_type}. See
 \link{NC_TYPES} for a list of valid types.}
 
+\item{pack_type, add_offset, scale_factor}{If defined, values will be packed to save space by first
+subtracting \code{add_offset} then dividing by \code{scale_factor} and writing as type \code{pack_type}.}
+
 \item{long_name}{Optional descriptive name of the variable.}
 
 \item{standard_name}{Optional standard name of the variable.}
@@ -45,23 +48,18 @@ will have \code{type} set to \code{pack_type} to indicate that the data will be 
 
 \item{grid_mapping}{Optional name of a grid_mapping created with \code{\link[=nc_crs]{nc_crs()}}. For details, see}
 
+\item{fill_value}{Optional value to use for missing data. If data are packed, \code{fill_value} must
+be within range of For details, see}
+
+\item{atts}{Optional list of attributes created with \code{\link[=nc_att]{nc_att()}}.}
+
 \item{chunking}{Set to \code{NA} to allow the netCDF library to choose a storage layout, \code{FALSE} for
 contiguous storage, or a vector named with the dimensions indicating the number of elements along
 each dimension. Any \code{NA} elements in the vector will be replaced by the dimension's size.}
 
 \item{deflate}{Compression level from 1 (min) to 9 (max) or \code{NA} (no compression).}
 
-\item{shuffle}{Whether to enable byte shuffling, which may improve compression with \code{deflate}.
-\href{https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#grid-mappings-and-projections}{CF conventions section 5.6}.}
-
-\item{pack_type, add_offset, scale_factor}{If defined, values will be packed to save space by first
-subtracting \code{add_offset} then dividing by \code{scale_factor} and writing as type \code{pack_type}.}
-
-\item{fill_value}{Optional value to use for missing data. If data are packed, \code{fill_value} must
-be within range of For details, see
-\href{https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#missing-data}{CF conventions section 2.5.1}.}
-
-\item{atts}{Optional list of attributes created with \code{\link[=nc_att]{nc_att()}}.}
+\item{shuffle}{Whether to enable byte shuffling, which may improve compression with \code{deflate}.}
 }
 \value{
 A list of the passed arguments.
@@ -81,4 +79,9 @@ nc_var("elev", data = data, dims = c("y", "x"), chunking = c(y = 1, x = NA))
 
 ## Pack to reduce file size: divide by 0.1 and write as 16-bit integers rather than 32-bit floats
 nc_var("elev", data = data, dims = c("y", "x"), pack_type = "NC_SHORT", scale_factor = 0.1)
+}
+\seealso{
+See https://cfconventions.org/ for details on packing, grid mappings, and recommended
+names and units. See https://docs.unidata.ucar.edu/nug/current/netcdf_perf_chunking.html for
+details on chunking.
 }
