@@ -51,6 +51,6 @@ Define a netCDF variable describing a coordinate reference system (CRS)
 nc_crs("crs", grid_mapping_name = "sinusoidal", earth_radius = 6371007.181)
 }
 \seealso{
-See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html section
-5 "Coordinate Systems and Domain" for details on documenting coordinate systems.
+See https://cfconventions.org/ section on "Coordinate Systems and Domain" for guidance on
+documenting coordinate systems.
 }
