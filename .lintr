@@ -1,0 +1,6 @@
+linters: linters_with_tags(
+  tags = c("defaults", "best_practices"),
+  commas_linter(allow_trailing = TRUE)
+  line_length_linter(100),
+)
+encoding: "UTF-8"

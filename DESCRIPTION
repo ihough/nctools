@@ -1,0 +1,17 @@
+Package: nctools
+Title: Write Tidy Data to NetCDF
+Version: 0.0.1
+Authors@R: 
+    person("Ian", "Hough", , "ian.hough@univ-grenoble-alpes.fr", role = c("aut", "cre"))
+Description: Wrappers to facilitate saving tidy data as a CF-compliant netCDF file using RNetCDF.
+License: MIT + file LICENSE
+Imports:
+  data.table,
+  logger,
+  RNetCDF,
+  tools,
+Suggests:
+  tinytest
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

@@ -1,0 +1,9 @@
+^\.lintr$
+^\.Rproj\.user$
+^environment\.yml$
+^LICENSE\.md$
+^README\.md$
+^nctools\.Rproj$
+^renv$
+^renv\.lock$
+^.*\.Rproj$

@@ -1,0 +1,8 @@
+name: nctools
+channels:
+  - conda-forge
+dependencies:
+  - hdf5[build="mpi_open*"]
+  - libnetcdf[build="mpi_openmpi*"]
+  - netcdf4[build="mpi_openmpi*"]
+  - udunits2
